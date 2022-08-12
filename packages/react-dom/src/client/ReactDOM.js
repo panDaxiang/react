@@ -147,6 +147,7 @@ const Internals = {
   ],
 };
 
+// react18入口
 function createRoot(
   container: Element | Document | DocumentFragment,
   options?: CreateRootOptions,

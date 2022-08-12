@@ -21,6 +21,11 @@ import ReactCurrentDispatcher from './ReactCurrentDispatcher';
 type BasicStateAction<S> = (S => S) | S;
 type Dispatch<A> = A => void;
 
+/** 
+ * 所有的hook会调用改方法
+ * 判断是否在函数式组件内部调用hook
+ * 返回一个Dispatcher类型的对象,包含所有hook对应的方法
+ */
 function resolveDispatcher() {
   const dispatcher = ReactCurrentDispatcher.current;
   if (__DEV__) {
