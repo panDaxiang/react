@@ -74,7 +74,7 @@ import {
   disableCommentsAsDOMContainers,
 } from 'shared/ReactFeatureFlags';
 
-/* global reportError */
+/** 兼容错误处理方法 */
 const defaultOnRecoverableError =
   typeof reportError === 'function'
     ? // In modern browsers, reportError will dispatch an error event,
@@ -164,6 +164,7 @@ ReactDOMHydrationRoot.prototype.unmount = ReactDOMRoot.prototype.unmount = funct
   }
 };
 
+/** 创建入口 */
 export function createRoot(
   container: Element | Document | DocumentFragment,
   options?: CreateRootOptions,
@@ -180,6 +181,7 @@ export function createRoot(
   let onRecoverableError = defaultOnRecoverableError;
   let transitionCallbacks = null;
 
+  // 处理options参数
   if (options !== null && options !== undefined) {
     if (__DEV__) {
       if ((options: any).hydrate) {
@@ -202,6 +204,7 @@ export function createRoot(
         }
       }
     }
+    /** 是否配置严格模式 */
     if (options.unstable_strictMode === true) {
       isStrictMode = true;
     }
@@ -331,6 +334,7 @@ export function hydrateRoot(
   return new ReactDOMHydrationRoot(root);
 }
 
+/** 判断container是否是一个有效的根元素 */
 export function isValidContainer(node: any): boolean {
   return !!(
     node &&
@@ -356,8 +360,10 @@ export function isValidContainerLegacy(node: any): boolean {
   );
 }
 
+/** 挂载节点警告处理 */
 function warnIfReactDOMContainerInDEV(container: any) {
   if (__DEV__) {
+    /** 挂载节点为body，警告用户 */
     if (
       container.nodeType === ELEMENT_NODE &&
       ((container: any): Element).tagName &&
@@ -371,6 +377,7 @@ function warnIfReactDOMContainerInDEV(container: any) {
           'for your app.',
       );
     }
+    /** 判断节点是否挂载过 */
     if (isContainerMarkedAsRoot(container)) {
       if (container._reactRootContainer) {
         console.error(

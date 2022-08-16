@@ -244,8 +244,15 @@ function findHostInstanceWithWarning(
   return findHostInstance(component);
 }
 
+/** 
+ * 创建根fiber
+ * containerInfo 挂载的dom元素
+ * tag legacy或者concurrent
+ * hydrationCallbacks 
+ * isStrictMode 严格模式
+ */
 export function createContainer(
-  containerInfo: Container,
+  containerInfo: Container, 
   tag: RootTag,
   hydrationCallbacks: null | SuspenseHydrationCallbacks,
   isStrictMode: boolean,

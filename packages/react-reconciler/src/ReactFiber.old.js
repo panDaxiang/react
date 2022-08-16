@@ -197,19 +197,7 @@ function FiberNode(
   }
 }
 
-// This is a constructor function, rather than a POJO constructor, still
-// please ensure we do the following:
-// 1) Nobody should add any instance methods on this. Instance methods can be
-//    more difficult to predict when they get optimized and they are almost
-//    never inlined properly in static compilers.
-// 2) Nobody should rely on `instanceof Fiber` for type testing. We should
-//    always know when it is a fiber.
-// 3) We might want to experiment with using numeric keys since they are easier
-//    to optimize in a non-JIT environment.
-// 4) We can easily go from a constructor to a createFiber object literal if that
-//    is faster.
-// 5) It should be easy to port this to a C struct and keep a C implementation
-//    compatible.
+/** 返回一个对象 */
 const createFiber = function(
   tag: WorkTag,
   pendingProps: mixed,
@@ -428,12 +416,17 @@ export function resetWorkInProgress(workInProgress: Fiber, renderLanes: Lanes) {
   return workInProgress;
 }
 
+/** 
+ * 根据配置处理成相对应的mode，作为createFiber方法入参
+ * @returns fiber对象
+ */
 export function createHostRootFiber(
   tag: RootTag,
   isStrictMode: boolean,
   concurrentUpdatesByDefaultOverride: null | boolean,
 ): Fiber {
   let mode;
+  // 并发模式
   if (tag === ConcurrentRoot) {
     mode = ConcurrentMode;
     if (isStrictMode === true) {

@@ -43,6 +43,7 @@ export type RootState = {
   cache: Cache,
 };
 
+/** 根fiber的构造函数 */
 function FiberRootNode(
   containerInfo,
   tag,
@@ -126,6 +127,7 @@ function FiberRootNode(
   }
 }
 
+/** 创建一个根fiber节点 */
 export function createFiberRoot(
   containerInfo: any,
   tag: RootTag,
@@ -142,6 +144,7 @@ export function createFiberRoot(
   onRecoverableError: null | ((error: mixed) => void),
   transitionCallbacks: null | TransitionTracingCallbacks,
 ): FiberRoot {
+  // 返回一个fiber对象
   const root: FiberRoot = (new FiberRootNode(
     containerInfo,
     tag,
@@ -149,6 +152,8 @@ export function createFiberRoot(
     identifierPrefix,
     onRecoverableError,
   ): any);
+
+  // 这两个变量先不管
   if (enableSuspenseCallback) {
     root.hydrationCallbacks = hydrationCallbacks;
   }
