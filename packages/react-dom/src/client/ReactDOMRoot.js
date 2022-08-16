@@ -225,6 +225,7 @@ export function createRoot(
     }
   }
 
+  /** 创建一个rootFiber */
   const root = createContainer(
     container,
     ConcurrentRoot,
@@ -241,6 +242,8 @@ export function createRoot(
     container.nodeType === COMMENT_NODE
       ? (container.parentNode: any)
       : container;
+      
+  // 事件的绑定处理
   listenToAllSupportedEvents(rootContainerElement);
 
   return new ReactDOMRoot(root);

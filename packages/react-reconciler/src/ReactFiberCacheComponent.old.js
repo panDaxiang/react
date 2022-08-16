@@ -79,9 +79,11 @@ if (__DEV__ && enableCache) {
   CacheContext._currentRenderer2 = null;
 }
 
-// Creates a new empty Cache instance with a ref-count of 0. The caller is responsible
-// for retaining the cache once it is in use (retainCache), and releasing the cache
-// once it is no longer needed (releaseCache).
+/** 
+ * 创建一个引用计数为0的新空Cache实例;
+ * 一旦缓存被使用，调用者负责保留它(retainCache);
+ * 一旦缓存不再需要，就释放它(releaseCache);
+ */
 export function createCache(): Cache {
   if (!enableCache) {
     return (null: any);
@@ -95,6 +97,7 @@ export function createCache(): Cache {
   return cache;
 }
 
+/** 引用cache，标记引用次数 */
 export function retainCache(cache: Cache) {
   if (!enableCache) {
     return;

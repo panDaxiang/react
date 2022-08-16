@@ -144,7 +144,7 @@ export function createFiberRoot(
   onRecoverableError: null | ((error: mixed) => void),
   transitionCallbacks: null | TransitionTracingCallbacks,
 ): FiberRoot {
-  // 返回一个fiber对象
+  // 生成一个FiberRoot
   const root: FiberRoot = (new FiberRootNode(
     containerInfo,
     tag,
@@ -176,13 +176,9 @@ export function createFiberRoot(
     const initialCache = createCache();
     retainCache(initialCache);
 
-    // The pooledCache is a fresh cache instance that is used temporarily
-    // for newly mounted boundaries during a render. In general, the
-    // pooledCache is always cleared from the root at the end of a render:
-    // it is either released when render commits, or moved to an Offscreen
-    // component if rendering suspends. Because the lifetime of the pooled
-    // cache is distinct from the main memoizedState.cache, it must be
-    // retained separately.
+    // pooledCache是一个新的缓存实例，在呈现期间临时用于新挂载的边界。
+    // 通常，pooledCache总是在渲染结束时从根目录中清除:它要么在渲染提交时被释放，要么在渲染挂起时被移到Offscreen组件。
+    // 因为pooledCache的生存期与主memoizedState.cache不同，必须单独保留
     root.pooledCache = initialCache;
     retainCache(initialCache);
     const initialState: RootState = {

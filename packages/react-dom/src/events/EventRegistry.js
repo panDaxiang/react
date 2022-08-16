@@ -11,6 +11,7 @@ import type {DOMEventName} from './DOMEventNames';
 
 import {enableCreateEventHandleAPI} from 'shared/ReactFeatureFlags';
 
+/** 原生事件集合 */
 export const allNativeEvents: Set<DOMEventName> = new Set();
 
 if (enableCreateEventHandleAPI) {

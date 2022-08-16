@@ -203,9 +203,10 @@ export const mediaEventTypes: Array<DOMEventName> = [
   'waiting',
 ];
 
-// We should not delegate these events to the container, but rather
-// set them on the actual target element itself. This is primarily
-// because these events do not consistently bubble in the DOM.
+/** 
+ * 我们不应该将这些事件委托给容器，而应该将它们设置在实际的目标元素本身。
+ * 这主要是因为这些事件不会一直在DOM中冒泡。
+ */
 export const nonDelegatedEvents: Set<DOMEventName> = new Set([
   'cancel',
   'close',
@@ -323,6 +324,12 @@ export function listenToNonDelegatedEvent(
   }
 }
 
+/** 
+ * @description 监听事件到原生dom
+ * @params 事件名称
+ * @params 是否捕获阶段
+ * @params 绑定dom
+ */
 export function listenToNativeEvent(
   domEventName: DOMEventName,
   isCapturePhaseListener: boolean,
@@ -387,8 +394,7 @@ export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
   if (!(rootContainerElement: any)[listeningMarker]) {
     (rootContainerElement: any)[listeningMarker] = true;
     allNativeEvents.forEach(domEventName => {
-      // We handle selectionchange separately because it
-      // doesn't bubble and needs to be on the document.
+      // 我们分开处理selectionchange，因为它不会冒泡到document
       if (domEventName !== 'selectionchange') {
         if (!nonDelegatedEvents.has(domEventName)) {
           listenToNativeEvent(domEventName, false, rootContainerElement);
@@ -396,13 +402,13 @@ export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
         listenToNativeEvent(domEventName, true, rootContainerElement);
       }
     });
+    // document | null
     const ownerDocument =
       (rootContainerElement: any).nodeType === DOCUMENT_NODE
         ? rootContainerElement
         : (rootContainerElement: any).ownerDocument;
     if (ownerDocument !== null) {
-      // The selectionchange event also needs deduplication
-      // but it is attached to the document.
+      // selectionchange事件也需要重复数据删除，但它被附加到文档中
       if (!(ownerDocument: any)[listeningMarker]) {
         (ownerDocument: any)[listeningMarker] = true;
         listenToNativeEvent('selectionchange', false, ownerDocument);
@@ -411,6 +417,7 @@ export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
   }
 }
 
+/** 事件绑定核心代码 */
 function addTrappedEventListener(
   targetContainer: EventTarget,
   domEventName: DOMEventName,

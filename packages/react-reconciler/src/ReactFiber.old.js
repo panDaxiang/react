@@ -197,7 +197,7 @@ function FiberNode(
   }
 }
 
-/** 返回一个对象 */
+/** 生成一个fiber对象 */
 const createFiber = function(
   tag: WorkTag,
   pendingProps: mixed,
