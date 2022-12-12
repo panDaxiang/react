@@ -309,6 +309,11 @@ function unstable_wrapCallback(callback) {
   };
 }
 
+/** 
+ * 调度任务
+ * 1. 根据优先级处理startTime和timeout，得到过期时间expirationTime = startTime + timeout
+ * 2. 创建任务tast, 
+ */
 function unstable_scheduleCallback(priorityLevel, callback, options) {
   var currentTime = getCurrentTime();
 
